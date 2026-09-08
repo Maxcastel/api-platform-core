@@ -1,5 +1,11 @@
 # Changelog
 
+## v5.0.0-alpha.4
+
+### Breaking changes
+
+* JSON:API: `use_iri_as_id` now defaults to `false` instead of resolving to `true` with a deprecation, as announced in #8327. The `data.id` member carries the resource identifier and the IRI moves to `data.links.self`. Set `api_platform.jsonapi.use_iri_as_id` to `true` (Symfony) or `'jsonapi' => ['use_iri_as_id' => true]` in `config/api-platform.php` (Laravel) to keep the previous payload.
+
 ## v5.0.0-alpha.3
 
 ### Features
