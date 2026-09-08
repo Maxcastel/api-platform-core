@@ -1,5 +1,11 @@
 # Changelog
 
+## v5.0.0-alpha.4
+
+### Breaking changes
+
+* `ApiPlatform\State\Provider\DeserializeProvider` no longer accepts a `Symfony\Contracts\Translation\TranslatorInterface` as its fourth constructor argument, as announced by the deprecation added in 4.4. Denormalization violations and their translation are handled by `DenormalizationViolationFactoryInterface`, which moves from the fifth to the fourth position. Anyone constructing the provider by hand, or overriding the `api_platform.state_provider.deserialize` service definition, must drop the translator argument. `api-platform/state` no longer requires `symfony/translation-contracts`.
+
 ## v5.0.0-alpha.3
 
 ### Features
