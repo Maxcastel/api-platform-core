@@ -61,6 +61,8 @@ api_platform:
         html:                          ['text/html']
         xml:                           ['application/xml', 'text/xml']
     jsonapi:
+        # Not the default since 5.0: kept explicitly so the shared test environment
+        # keeps covering the IRI-as-id mode. The "jsonapi" environment covers the default.
         use_iri_as_id: true
     graphql:
         enabled: true

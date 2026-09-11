@@ -4,6 +4,7 @@
 
 ### Breaking changes
 
+* JSON:API: `use_iri_as_id` now defaults to `false` instead of resolving to `true` with a deprecation, as announced in #8327. The `data.id` member carries the resource identifier and the IRI moves to `data.links.self`. Set `api_platform.jsonapi.use_iri_as_id` to `true` (Symfony) or `'jsonapi' => ['use_iri_as_id' => true]` in `config/api-platform.php` (Laravel) to keep the previous payload.
 * `ApiPlatform\State\Provider\DeserializeProvider` no longer accepts a `Symfony\Contracts\Translation\TranslatorInterface` as its fourth constructor argument, as announced by the deprecation added in 4.4. Denormalization violations and their translation are handled by `DenormalizationViolationFactoryInterface`, which moves from the fifth to the fourth position. Anyone constructing the provider by hand, or overriding the `api_platform.state_provider.deserialize` service definition, must drop the translator argument. `api-platform/state` no longer requires `symfony/translation-contracts`.
 ### Notes
 
