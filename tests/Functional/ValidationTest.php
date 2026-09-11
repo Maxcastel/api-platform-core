@@ -18,7 +18,6 @@ use ApiPlatform\Tests\Fixtures\TestBundle\ApiResource\Issue7228\ValidationGroupS
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\DummyWithCollectDenormalizationErrors;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\RelatedDummy;
 use ApiPlatform\Tests\SetupClassResourcesTrait;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 /**
  * Tests denormalization error collection feature.
@@ -92,35 +91,19 @@ final class ValidationTest extends ApiTestCase
         $violationQux = $findViolation('qux');
         $this->assertNotNull($violationQux);
 
-        if (!method_exists(PropertyInfoExtractor::class, 'getType')) {
-            $this->assertSame('This value should be of type string.', $violationQux['message']);
-        } else {
-            $this->assertSame('This value should be of type null|string.', $violationQux['message']);
-        }
+        $this->assertSame('This value should be of type null|string.', $violationQux['message']);
 
         $violationFoo = $findViolation('foo');
         $this->assertNotNull($violationFoo);
-        if (!method_exists(PropertyInfoExtractor::class, 'getType')) {
-            $this->assertSame('This value should be of type bool.', $violationFoo['message']);
-        } else {
-            $this->assertSame('This value should be of type bool|null.', $violationFoo['message']);
-        }
+        $this->assertSame('This value should be of type bool|null.', $violationFoo['message']);
 
         $violationBar = $findViolation('bar');
         $this->assertNotNull($violationBar);
-        if (!method_exists(PropertyInfoExtractor::class, 'getType')) {
-            $this->assertSame('This value should be of type int.', $violationBar['message']);
-        } else {
-            $this->assertSame('This value should be of type int|null.', $violationBar['message']);
-        }
+        $this->assertSame('This value should be of type int|null.', $violationBar['message']);
 
         $violationUuid = $findViolation('uuid');
         $this->assertNotNull($violationUuid);
-        if (!method_exists(PropertyInfoExtractor::class, 'getType')) {
-            $this->assertSame('This value should be of type uuid.', $violationUuid['message']);
-        } else {
-            $this->assertSame('This value should be of type uuid|null.', $violationUuid['message']);
-        }
+        $this->assertSame('This value should be of type uuid|null.', $violationUuid['message']);
         $this->assertArrayHasKey('hint', $violationUuid);
         $this->assertSame('Invalid UUID string: y', $violationUuid['hint']);
 
