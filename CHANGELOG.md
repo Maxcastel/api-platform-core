@@ -5,6 +5,9 @@
 ### Breaking changes
 
 * `ApiPlatform\State\Provider\DeserializeProvider` no longer accepts a `Symfony\Contracts\Translation\TranslatorInterface` as its fourth constructor argument, as announced by the deprecation added in 4.4. Denormalization violations and their translation are handled by `DenormalizationViolationFactoryInterface`, which moves from the fifth to the fourth position. Anyone constructing the provider by hand, or overriding the `api_platform.state_provider.deserialize` service definition, must drop the translator argument. `api-platform/state` no longer requires `symfony/translation-contracts`.
+### Notes
+
+* The internal `ApiPlatform\Symfony\Bundle\ArgumentResolver\CompatibleValueResolverInterface` is removed. It aliased either `ValueResolverInterface` or the Symfony 6 `ArgumentValueResolverInterface` depending on which existed; since the Symfony floor is `^7.4`, only the former can be installed, and Symfony 8 dropped the latter altogether. `PayloadArgumentResolver` now implements `ValueResolverInterface` directly.
 
 ## v5.0.0-alpha.3
 
