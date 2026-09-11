@@ -30,7 +30,7 @@ jobs:
           private_key: ${{ secrets.API_PLATFORM_APP_PRIVATE_KEY }}
 
       - name: Checkout repository
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           token: ${{ steps.generate_token.outputs.token }}
           fetch-depth: 0
@@ -47,7 +47,7 @@ jobs:
           echo "$(pwd)" >> $GITHUB_PATH
 
       - name: Split to manyrepo
-        run: find src -maxdepth 3 -name composer.json -print0 | xargs -I '{}' -n 1 -0 bash subtree.sh {} ${{ github.ref }}
+        run: find src -maxdepth 3 -name composer.json -print0 | xargs -I '{}' -n 1 -0 bash tools/subtree.sh {} ${{ github.ref }}
 
   dispatch-demo-update:
     name: Dispatch Demo Update

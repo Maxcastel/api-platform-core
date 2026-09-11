@@ -1,5 +1,103 @@
 # Changelog
 
+## v5.0.0-alpha.3
+
+### Features
+
+* [672d48e25](https://github.com/api-platform/core/commit/672d48e2510ca08aed92958677c8f861cb36f959) feat(symfony): map UniqueConstraintViolationException to 422 by default (#8478)
+
+### Bug fixes
+
+* [78151b7d1](https://github.com/api-platform/core/commit/78151b7d19da1dfba9a37362bb23a9cb4ff4acd1) fix(mcp): return resource read results for resources (#8436)
+
+### Dependencies
+
+* The Doctrine (ORM, ODM, Common) and JSON:API components now require `api-platform/metadata` `^5.0.0-alpha.3`. Their filters instantiate `ApiPlatform\OpenApi\Model\Parameter`, which the metadata component only guards behind a `class_exists()` check from that version on, so an older metadata makes them fatal on an install without `api-platform/openapi`.
+
+### Notes
+
+* JSON-LD: `/contexts/Error` and `/contexts/ConstraintViolationList` are no longer special-cased to the base context; they are built like any other resource context, since exceptions have been resources since 3.2 (#8402).
+* `SerializerContextBuilder` no longer injects `uri_variables` into the serialization context — URI variables are parsed by the serializer processor instead (#8402).
+
+Also contains [v4.4.0-alpha.4 changes](#v440-alpha4).
+
+## v5.0.0-alpha.2
+
+### Breaking changes
+
+* [e22e74464](https://github.com/api-platform/core/commit/e22e74464e49d0dc0bd86e7407f1e19b6c5db9ca) feat!: remove deprecated APIs scheduled for 5.0 (#8367)
+* [4a9a14507](https://github.com/api-platform/core/commit/4a9a14507e5ca97c85fcf8dd1e240008f000c525) feat!: remove the legacy PropertyInfo Type system, use symfony/type-info (#8364)
+* [1e6d13ae1](https://github.com/api-platform/core/commit/1e6d13ae117471dd6e549cd1cc5dc8816d5804fd) feat!: core 5.0 cleanups — PropertyAwareFilterInterface::getProperties(), JSON:API status as string (#8366)
+
+### Features
+
+* [d37a75379](https://github.com/api-platform/core/commit/d37a753790f8a8e1481a118b6a8fc9a08f57e962) feat(doctrine): standalone Date/Exists filters, ComparisonFilter [between], deprecate RangeFilter (#8351)
+
+### Bug fixes
+
+* [88f458a11](https://github.com/api-platform/core/commit/88f458a1108ba2fcd052a58d7647f23dad1b186b) fix(jsonschema): drop removed getBuiltinTypes path in SchemaPropertyMetadataFactory
+
+## v4.4.0-alpha.4
+
+### Bug fixes
+
+* [854c9218e](https://github.com/api-platform/core/commit/854c9218efd907b87c096a2a6e3e44c7f8c36f1a) fix(metadata): stop alerting on inline unwired filters at warmup (#8490)
+
+### Dependencies
+
+* The Doctrine (ORM, ODM, Common) and JSON:API components now require `api-platform/metadata` `^4.4.0-alpha.4`. Their filters instantiate `ApiPlatform\OpenApi\Model\Parameter`, which the metadata component only guards behind a `class_exists()` check from that version on, so an older metadata makes them fatal on an install without `api-platform/openapi`.
+
+Also contains [v4.3.18 changes](#v4318).
+
+## v4.4.0-alpha.3
+
+### Bug fixes
+
+* [f8c217283](https://github.com/api-platform/core/commit/f8c217283659dc80985e85c5570e113e1eba6482) fix(state): correct composer "conflicts" key to "conflict" (#8400)
+
+### Dependencies
+
+* Require `symfony/*` `^7.4 || ^8.0` across all components; drop support for Symfony 6.4 and 7.0–7.3 (#8397)
+* Stabilize formerly `@experimental` APIs (Elasticsearch, State parameter providers, PropertyAwareFilterInterface, Laravel); `@experimental` kept only on MCP (#8365)
+
+## v4.4.0-alpha.2
+
+### Bug fixes
+
+* [b3f02f4e0](https://github.com/api-platform/core/commit/b3f02f4e08edbcb25777815c1f38920ea187a5a9) fix(laravel): require `api-platform/metadata` `^4.4@alpha` so inter-package dependencies resolve to 4.4 (fixes a broken `composer require api-platform/laravel` install where `SortFilterInterface` was missing)
+
+## v4.4.0-alpha.1
+
+### Bug fixes
+
+* [9b7ace54f](https://github.com/api-platform/core/commit/9b7ace54fdef376d249243f1220d7df638f19b34) fix(graphql): build filter args from parameters (#8347)
+* [a47e36c33](https://github.com/api-platform/core/commit/a47e36c33b8436abe2e52413dee3acb71e83843f) fix(state): scope ReadLinkParameterProvider to current Link's class (#7943)
+* [c2909a1ff](https://github.com/api-platform/core/commit/c2909a1ff2016fb78ff81ea9f5fa97452e28fcd4) fix(mcp): fallback to sdk handler when not found (#7818)
+
+
+### Features
+
+* [0fb1dc8f6](https://github.com/api-platform/core/commit/0fb1dc8f6ff5457df773299f0c7eb7071494be69) feat(symfony): api:upgrade-filter codemod + filter fixture migration (#8344)
+* [2ff386bd8](https://github.com/api-platform/core/commit/2ff386bd854fbf0192d521be641fb7304b65688d) feat(symfony,laravel): `withCredentials` option to Swagger UI (#8197)
+* [373b56b98](https://github.com/api-platform/core/commit/373b56b98c01ee09583714b79ab0aa0bf3232508) feat(doctrine): deprecate the extends-AbstractFilter form of Date/Range/Exists filters (#8340)
+* [48bc56e9a](https://github.com/api-platform/core/commit/48bc56e9ab34532d87aafb9abd2e6c6c98768571) feat(metadata): document BackwardCompatibleFilterDescriptionTrait as public API (#8326)
+* [4bf850fc8](https://github.com/api-platform/core/commit/4bf850fc8957616f94c3faf5a1abc799826c6379) feat(doctrine): add StartSearchFilter and WordStartSearchFilter (ORM + ODM) (#8328)
+* [5ddf94aeb](https://github.com/api-platform/core/commit/5ddf94aeb9b560fd981bab4ddf62ad8d16641cd1) feat(jsonld): add resource-level jsonldContext for namespace prefixes (#8204)
+* [6942dc0a1](https://github.com/api-platform/core/commit/6942dc0a1bc708c0f86c454a8553c25d7e9e7fff) feat(doctrine): promote OrFilter out of @experimental (#8324)
+* [72b02afb0](https://github.com/api-platform/core/commit/72b02afb031d9aad0e84d2f8c230905f3a4437a9) feat(hydra): use hydra:memberAssertion instead of owl:equivalentClass (#7944)
+* [75f9056d3](https://github.com/api-platform/core/commit/75f9056d32d696fdfd729ead9d4dd5e443eb6062) feat(openapi): support OpenAPI 3.2.0 (#8350)
+* [8f48b9dbc](https://github.com/api-platform/core/commit/8f48b9dbc02e1dd35e02151edcab1bb0138d1ed9) feat(symfony): deprecate jsonapi.use_iri_as_id defaulting to true (#8327)
+* [9179b3667](https://github.com/api-platform/core/commit/9179b366710e50085b796430e390a6a158f40e24) feat(doctrine): per-property filter map in FreeTextQueryFilter (#8257)
+* [94f3c7fe8](https://github.com/api-platform/core/commit/94f3c7fe8b681dc76d7d061092916d4bd7c1b900) feat(openapi): Scalar API Reference documentation support (#7817)
+* [98dc77ba7](https://github.com/api-platform/core/commit/98dc77ba734d4fb9dfd46d76885a706aed3b6405) feat(doctrine): state options repositoryMethod for query builder (#7115)
+* [9b1a58fd5](https://github.com/api-platform/core/commit/9b1a58fd533839a94f7ead264645410745f104fa) feat(doctrine): deprecate the legacy SearchFilter/Boolean/Numeric/BackedEnum/OrderFilter (#8341)
+* [af0a0ab6c](https://github.com/api-platform/core/commit/af0a0ab6c286b5e30160dce9f4bcc23836125dab) feat(doctrine): promote ComparisonFilter out of @experimental (#8323)
+* [b0f6dbd63](https://github.com/api-platform/core/commit/b0f6dbd63b1314efadedfd3a0b35474f6f1b8cbf) feat(doctrine): add EndSearchFilter primary for ORM and ODM (#8319)
+* [b2f1a5ac3](https://github.com/api-platform/core/commit/b2f1a5ac34c6b6eb71bce40a91e34c5bee63f514) feat(metadata): throwOnNotFound option (#6027)
+* [c3fd6dd6b](https://github.com/api-platform/core/commit/c3fd6dd6b5dedbc96851ccc2fcc6d01ac2fc4e46) feat(doctrine): deprecate AbstractFilter base class (#8330)
+* [c9e5071d9](https://github.com/api-platform/core/commit/c9e5071d973caedeb9b554f885dedbc89743b93d) feat(symfony): deprecate Symfony Security AccessDeniedException (#8318)
+* [cc0ae1254](https://github.com/api-platform/core/commit/cc0ae1254acaf9742c7f899dd24a14d46c89ca6e) feat: support dynamic HTTP response status code via request attribute (#7904)
+
 ## v4.3.18
 
 ### Bug fixes

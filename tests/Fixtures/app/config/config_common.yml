@@ -60,6 +60,8 @@ api_platform:
         jsonapi:                       ['application/vnd.api+json']
         html:                          ['text/html']
         xml:                           ['application/xml', 'text/xml']
+    jsonapi:
+        use_iri_as_id: true
     graphql:
         enabled: true
         nesting_separator: __
@@ -82,8 +84,6 @@ api_platform:
     http_cache:
         invalidation:
             enabled: true
-    # TODO: remove in 5.0
-    enable_link_security: true
     # see also defaults in AppKernel
     doctrine_mongodb_odm: false
     mapping:
@@ -159,11 +159,6 @@ services:
 
     ApiPlatform\Tests\Fixtures\TestBundle\State\ContainNonResourceProvider:
         class: 'ApiPlatform\Tests\Fixtures\TestBundle\State\ContainNonResourceProvider'
-        tags:
-            - name: 'api_platform.state_provider'
-
-    ApiPlatform\Tests\Fixtures\TestBundle\State\SerializableProvider:
-        class: 'ApiPlatform\Tests\Fixtures\TestBundle\State\SerializableProvider'
         tags:
             - name: 'api_platform.state_provider'
 

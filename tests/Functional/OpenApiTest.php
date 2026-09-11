@@ -356,7 +356,7 @@ class OpenApiTest extends ApiTestCase
         $json = $response->toArray();
 
         // Context
-        $this->assertSame('3.1.0', $json['openapi']);
+        $this->assertSame('3.2.0', $json['openapi']);
         // Root properties
         $this->assertSame('My Dummy API', $json['info']['title']);
         $this->assertStringContainsString('This is a test API.', $json['info']['description']);
@@ -448,8 +448,10 @@ class OpenApiTest extends ApiTestCase
         $this->assertFalse($json['paths']['/dummies']['get']['parameters'][4]['required']);
         $this->assertSame('boolean', $json['paths']['/dummies']['get']['parameters'][4]['schema']['type']);
 
-        $this->assertSame('foobar[]', $json['paths']['/dummy_cars']['get']['parameters'][9]['name']);
-        $this->assertSame('Allows you to reduce the response to contain only the properties you need. If your desired property is nested, you can address it using nested arrays. Example: foobar[]={propertyName}&foobar[]={anotherPropertyName}&foobar[{nestedPropertyParent}][]={nestedProperty}', $json['paths']['/dummy_cars']['get']['parameters'][9]['description']);
+        $dummyCarParameters = $json['paths']['/dummy_cars']['get']['parameters'];
+        $foobarParameter = array_values(array_filter($dummyCarParameters, static fn (array $parameter): bool => 'foobar[]' === $parameter['name']));
+        $this->assertCount(1, $foobarParameter);
+        $this->assertSame('Allows you to reduce the response to contain only the properties you need. If your desired property is nested, you can address it using nested arrays. Example: foobar[]={propertyName}&foobar[]={anotherPropertyName}&foobar[{nestedPropertyParent}][]={nestedProperty}', $foobarParameter[0]['description']);
 
         // Webhook
         $this->assertSame('Something else here for example', $json['webhooks']['a/{id}']['get']['description']);
@@ -488,7 +490,7 @@ class OpenApiTest extends ApiTestCase
         $this->assertCount(7, $json['paths']['/related_dummies/{id}/related_to_dummy_friends']['get']['parameters']);
 
         // Subcollection - check schema
-        $this->assertSame('#/components/schemas/RelatedToDummyFriend.jsonld-fakemanytomany', $json['paths']['/related_dummies/{id}/related_to_dummy_friends']['get']['responses']['200']['content']['application/ld+json']['schema']['allOf'][1]['properties']['hydra:member']['items']['$ref']);
+        $this->assertSame('#/components/schemas/RelatedToDummyFriend4.jsonld-fakemanytomany', $json['paths']['/related_dummies/{id}/related_to_dummy_friends']['get']['responses']['200']['content']['application/ld+json']['schema']['allOf'][1]['properties']['hydra:member']['items']['$ref']);
 
         // Deprecations
         $this->assertTrue($json['paths']['/deprecated_resources']['get']['deprecated']);
@@ -589,7 +591,7 @@ class OpenApiTest extends ApiTestCase
         $json = $response->toArray();
 
         // Context
-        $this->assertSame('3.1.0', $json['openapi']);
+        $this->assertSame('3.2.0', $json['openapi']);
         // Root properties
         $this->assertSame('My Dummy API', $json['info']['title']);
         $this->assertStringContainsString('This is a test API.', $json['info']['description']);

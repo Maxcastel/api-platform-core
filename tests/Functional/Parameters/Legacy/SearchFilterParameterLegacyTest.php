@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace ApiPlatform\Tests\Functional\Parameters\Legacy;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use ApiPlatform\Tests\Fixtures\TestBundle\Document\SearchFilterParameter as SearchFilterParameterDocument;
-use ApiPlatform\Tests\Fixtures\TestBundle\Entity\SearchFilterParameter;
+use ApiPlatform\Tests\Fixtures\TestBundle\Document\Legacy\SearchFilterParameter as SearchFilterParameterDocument;
+use ApiPlatform\Tests\Fixtures\TestBundle\Entity\Legacy\SearchFilterParameter;
 use ApiPlatform\Tests\RecreateSchemaTrait;
 use ApiPlatform\Tests\SetupClassResourcesTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -48,7 +48,7 @@ final class SearchFilterParameterLegacyTest extends ApiTestCase
         $resource = $this->isMongoDB() ? SearchFilterParameterDocument::class : SearchFilterParameter::class;
         $this->recreateSchema([$resource]);
         $this->loadFixtures($resource);
-        $route = 'search_filter_parameter';
+        $route = 'legacy_search_filter_parameter';
         $response = self::createClient()->request('GET', $route.'?foo=bar');
         $a = $response->toArray();
         $this->assertCount(2, $a['hydra:member']);
@@ -119,7 +119,7 @@ final class SearchFilterParameterLegacyTest extends ApiTestCase
         $resource = $this->isMongoDB() ? SearchFilterParameterDocument::class : SearchFilterParameter::class;
         $this->recreateSchema([$resource]);
         $this->loadFixtures($resource);
-        $route = 'search_filter_parameter';
+        $route = 'legacy_search_filter_parameter';
         $response = self::createClient()->request('GET', $route.'?foo=baz');
         $a = $response->toArray();
         $this->assertEquals($a['hydra:member'][0]['foo'], 'baz');
@@ -156,19 +156,19 @@ final class SearchFilterParameterLegacyTest extends ApiTestCase
         // 1x foo = 'baz'
 
         yield 'partial match on foo (fo -> 3x foo)' => [
-            '/search_filter_parameter?searchPartial[foo]=fo',
+            '/legacy_search_filter_parameter?searchPartial[foo]=fo',
             3,
             ['foo', 'foo', 'foo'],
         ];
 
         yield 'partial match on foo (ba -> 2x bar, 1x baz)' => [
-            '/search_filter_parameter?searchPartial[foo]=ba',
+            '/legacy_search_filter_parameter?searchPartial[foo]=ba',
             3,
             ['bar', 'bar', 'baz'],
         ];
 
         yield 'partial match on foo (az -> 1x baz)' => [
-            '/search_filter_parameter?searchPartial[foo]=az',
+            '/legacy_search_filter_parameter?searchPartial[foo]=az',
             1,
             ['baz'],
         ];
